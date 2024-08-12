@@ -1,0 +1,57 @@
+<?php
+include 'db.php';
+
+// Consulta para obtener todos los proveedores
+$sql = "SELECT * FROM proveedores";
+$result = $conn->query($sql);
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Proveedores</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-4">Lista de Proveedores</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Empresa</th>
+                <th>Contacto</th>
+                <th>Teléfono</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($result->num_rows > 0): ?>
+                <?php while($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo $row["id"]; ?></td>
+                        <td><?php echo $row["empresa"]; ?></td>
+                        <td><?php echo $row["contacto"]; ?></td>
+                        <td><?php echo $row["telefono"]; ?></td>
+                        <td>
+                            <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Editar</a>
+                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="5">No hay proveedores disponibles</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+<?php
+$conn->close();
+?>
