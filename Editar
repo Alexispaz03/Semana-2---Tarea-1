@@ -1,0 +1,19 @@
+<?php
+include 'db.php';
+
+$id = $_GET['id'];
+
+// Eliminar el proveedor
+$sql = "DELETE FROM proveedores WHERE id=$id";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Proveedor eliminado correctamente";
+} else {
+    echo "Error al eliminar: " . $conn->error;
+}
+
+$conn->close();
+
+// Redirigir a la página principal
+header("Location: index.php");
+?>
